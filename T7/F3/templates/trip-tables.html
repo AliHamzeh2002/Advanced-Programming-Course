@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Signup</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="mystyle.css">
+        
+    </head>
+    <body>
+        <header>
+            <h1 id="nav-title">UTaxi!</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/new-trip-form">New Trip</a></li>
+                    <li><a href="/delete-trip-form">Delete Trip</a></li>
+                    <li><a href="/driver-authentication-form">See All Trips</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">Close</span>
+            <h3 id="msg"></h3>
+        </div>
+        <table id="table-content">
+            <tr>
+              <th>ID</th>
+              <th>Passenger</th>
+              <th>Origin</th>
+              <th>Destination</th>
+              <th>Cost</th>
+              <th>Status</th>
+              <th>Options</th>
+            </tr>
+            <!--TABLE CONTENT GOES HERE-->
+        </table>
+        <script src="msg_show.js"></script>
+        <footer> 
+            <h3> Created By Ali </h3>
+        </footer>
+    </body>
+</html>

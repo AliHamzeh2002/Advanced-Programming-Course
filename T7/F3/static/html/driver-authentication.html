@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Driver Authentication</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="mystyle.css">
+
+    </head>
+    <body>
+        <header>
+            <h1 id="nav-title">UTaxi!</h1>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/signup">Sign Up</a></li>
+                    <li><a href="/new-trip-form">New Trip</a></li>
+                    <li><a href="/delete-trip-form">Delete Trip</a></li>
+                    <li><a href="/driver-authentication-form">See All Trips</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id="alert">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">Close</span>
+            <h3 id="msg"></h3>
+         </div>
+        <div class="signupFrm">
+            <form action="trips-table" class="form" method="POST">
+                <h1 class="title">Driver Authentication</h1>
+                <div class="inputContainer">
+                    <input type="text" class="input" placeholder="a" name="username" required>
+                    <label for="username" class="label">Username</label>
+                </div>
+                <h3>Sort By Cost:</h3><br>
+                <div class="inputContainer">
+                    <input type="radio" id="yes_radio" name="sort_by_cost" value="yes" required>
+                    <label for="yes_radio">Yes</label><br>
+                    <input type="radio" id="no_radio" name="sort_by_cost" value="no" required>
+                    <label for="no_radio">No</label><br>
+                </div>
+                <input type="submit" class="submitBtn" value="Submit">
+            </form>
+        </div>          
+        <script src="msg_show.js"></script>
+        <footer> 
+            <h3> Created By Ali </h3>
+        </footer>
+      
+    </body>
+</html>

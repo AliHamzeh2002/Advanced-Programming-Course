@@ -1,0 +1,182 @@
+#include "TaxiManager.hpp"
+#include <iostream>
+
+using namespace std;
+
+TaxiManager::TaxiManager(string data_file_address){
+    CSVReader csv_reader(data_file_address);
+    places_data = csv_reader.read_data();
+    available_id = INITIAL_AVAILABLE_ID;
+}
+
+string TaxiManager::handle_command(Command command){
+    string type = command.get_type();
+    if (type == POST)
+        return handle_post_command(command);
+    else if(type == DELETE)
+        return handle_delete_command(command);
+    else if(type == GET)
+        return handle_get_command(command);
+    throw BadRequestError();
+}
+
+string TaxiManager::handle_post_command(Command command){
+    string command_name = command.get_name();
+    if (command_name == SIGNUP_COMMAND)
+        return handle_signup(command);
+    else if (command_name == TRIPS_COMMAND)
+        return handle_post_trip(command);
+    else if(command_name == ACCEPT_COMMAND)
+        return handle_accept(command);
+    else if(command_name == FINISH_COMMAND)
+        return handle_finish(command);
+    throw NotFoundError();
+}
+
+string TaxiManager::handle_delete_command(Command command){
+    string command_name = command.get_name();
+    if (command_name == TRIPS_COMMAND)
+        return handle_delete_trips(command);
+    throw NotFoundError();
+}
+
+string TaxiManager::handle_get_trips(Command command){
+    string username = command.get_parameter(USERNAME);
+    Driver* driver = find_driver_by_username(username);
+    try{
+        string id = command.get_parameter(ID);
+        return get_trip(id);
+    }
+    catch(BadRequestError& e){
+        return get_all_trips();
+    }
+    catch(...){
+        throw;
+    }
+}
+
+string TaxiManager::get_trip(string id){
+    Trip* trip = find_trip_by_id(id);
+    return trip->to_string();
+}
+
+string TaxiManager::get_all_trips(){
+    ostringstream os;
+    for (int i = 0; i < trips.size(); i++){
+        Trip* trip = trips[i];
+        os << trip->to_string();
+        if (i != trips.size() - 1)
+            os << endl;
+    }
+    if (trips.size() == 0)
+        os << EMPTY;
+    return os.str();
+}
+
+string TaxiManager::handle_get_command(Command command){
+    string command_name = command.get_name();
+    if (command_name == TRIPS_COMMAND)
+        return handle_get_trips(command);
+    throw NotFoundError();}
+
+string TaxiManager::handle_delete_trips(Command command){
+    string username = command.get_parameter(USERNAME);
+    Passenger* passenger = find_passenger_by_username(username);
+    string trip_id = command.get_parameter(ID);
+    Trip* trip = find_trip_by_id(trip_id);
+    trip->cancel_trip(passenger);
+    trips.erase(find(trips.begin(), trips.end(), trip));
+    return OK_MSG;
+}
+
+string TaxiManager::handle_signup(Command command){
+    string username = command.get_parameter(USERNAME);
+    if (username_exists(username))
+        throw BadRequestError();
+    string role = command.get_parameter(ROLE);
+    if (role == DRIVER)
+        drivers.push_back(new Driver(username));
+    else if(role == PASSENGER)
+        passengers.push_back(new Passenger(username));
+    else
+        throw BadRequestError();
+    return OK_MSG;
+}
+
+string TaxiManager::handle_post_trip(Command command){
+    string username = command.get_parameter(USERNAME);
+    Passenger* passenger = find_passenger_by_username(username);
+    string dest_str = command.get_parameter(DESTINATION);
+    string origin_str = command.get_parameter(ORIGIN);
+    Location dest = find_location(dest_str);
+    Location origin = find_location(origin_str);
+    trips.push_back(new Trip(available_id, passenger, {origin_str,origin} , {dest_str, dest} ));
+    return to_string(available_id++);
+}
+
+Passenger* TaxiManager::find_passenger_by_username(string username){
+    int passenger_index = find_passenger_index(username);
+    if (find_driver_index(username) != NOT_FOUND)
+        throw PermissionDeniedError();
+    else if (passenger_index == NOT_FOUND)
+        throw NotFoundError();
+    Passenger* passenger = passengers[passenger_index];
+    return passenger;
+}
+
+string TaxiManager::handle_accept(Command command){
+    string username = command.get_parameter(USERNAME);
+    Driver* driver = find_driver_by_username(username);
+    string trip_id = command.get_parameter(ID);
+    find_trip_by_id(trip_id)->start_trip(driver);
+    return OK_MSG;
+}
+
+string TaxiManager::handle_finish(Command command){
+    string username = command.get_parameter(USERNAME);
+    Driver* driver = find_driver_by_username(username);
+    string trip_id = command.get_parameter(ID);
+    find_trip_by_id(trip_id)->end_trip(driver);
+    return OK_MSG;    
+}
+
+Driver* TaxiManager::find_driver_by_username(string username){
+    int driver_index = find_driver_index(username);
+    if (find_passenger_index(username) != NOT_FOUND)
+        throw PermissionDeniedError();
+    else if (driver_index == NOT_FOUND)
+        throw NotFoundError();
+    return drivers[driver_index];
+}
+
+
+Trip* TaxiManager::find_trip_by_id(std::string id){
+    int index = find(trips.begin(), trips.end(), id) - trips.begin();
+    if (index >= trips.size())
+        throw NotFoundError();
+    return trips[index];
+}
+
+Location TaxiManager::find_location(string place_name){
+    if (places_data.find(place_name) != places_data.end())
+        return places_data[place_name];
+    throw NotFoundError();
+}
+
+bool TaxiManager::username_exists(string username){
+    return (find_driver_index(username) != NOT_FOUND || find_passenger_index(username) != NOT_FOUND);
+}
+
+int TaxiManager::find_driver_index(string username){
+    int index = find(drivers.begin(), drivers.end(), username) - drivers.begin();
+    if (index < drivers.size())
+        return index;
+    return NOT_FOUND;
+}
+
+int TaxiManager::find_passenger_index(string username){
+    int index = find(passengers.begin(), passengers.end(), username) - passengers.begin();
+    if (index < passengers.size())
+        return index;
+    return NOT_FOUND;
+}

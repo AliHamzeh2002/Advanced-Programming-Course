@@ -1,0 +1,16 @@
+POST signup ? username you role driver
+GET trips ? username you id 1
+GET trips ? username you
+POST signup ? username ali role passenger
+POST trips ? username ali origin Enghelab destination Farahzad
+POST trips ? username ali origin Enghelab destination Farahzad
+POST signup ? username amir role passenger
+POST signup ? username ali role driver
+POST trips ? username amir origin Enghelab destination Farahzad
+POST signup ? username hossein role driver
+POST trips ? username hossein origin Enghelab destination Farahzad
+POST accept ? username hossein id 1
+POST accept ? username hossein id 2
+POST finish ? username hossein id 2
+GET trips ? username hossein id 1
+GET trips ? username hossein

@@ -1,0 +1,268 @@
+/* Global */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica;
+}
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    font-family: "lato", sans-serif;
+  }
+
+.signupFrm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.form {
+    background-color: antiquewhite;
+    width: 400px;
+    border-radius: 8px;
+    padding: 20px 40px;
+    box-shadow: 0 10px 25px rgba(92, 99, 105, .2);
+  }
+  
+.title {
+  font-size: 40px;
+  margin-bottom: 50px;
+}
+
+.inputContainer {
+    position: relative;
+    height: 45px;
+    width: 90%;
+    margin-bottom: 17px;
+}
+
+.input {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    border: 1px solid #DADCE0;
+    border-radius: 7px;
+    font-size: 16px;
+    padding: 0 20px;
+    outline: none;
+    background: none;
+    z-index: 1;
+  }
+  
+  
+  ::placeholder {
+    color: transparent;
+  }
+
+  .label {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    padding: 0 4px;
+    background-color: antiquewhite;
+    color: gray;
+    font-size: 16px;
+    transition: 0.5s;
+    z-index: 0;
+  }
+
+  /* The alert message box */
+  #alert {
+    padding: 20px;
+    background-color: antiquewhite; /* Red */
+    color: black;
+    margin-bottom: 15px;
+    visibility: hidden;
+  }
+  
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: black;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }
+
+  .submitBtn {
+    display: block;
+    margin-left: auto;
+    padding: 15px 30px;
+    border: none;
+    background-color: rgb(221, 181, 18);
+    color: black;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 30px;
+  }
+  
+  .acceptBtn {
+    display: block;
+    padding: 15px 30px;
+    border: none;
+    background-color: rgb(221, 181, 18);
+    color: black;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .submitBtn:hover {
+    background-color: rgb(138, 127, 8);
+    transform: translateY(-2px);
+  }
+
+  .acceptBtn:hover {
+    background-color: rgb(138, 127, 8);
+    transform: translateY(-2px);
+  }
+
+  .input:focus + .label {
+    top: -7px;
+    left: 3px;
+    z-index: 10;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+  }
+
+  .input:focus {
+    border: 2px solid black;
+  }
+
+  .input:not(:placeholder-shown)+ .label {
+    top: -7px;
+    left: 3px;
+    z-index: 10;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+/* Header */
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px 50px;
+    box-shadow: 0 1px 8px rgb(138, 127, 8);
+    background-color: rgb(221, 181, 18);
+}
+
+footer {
+    position: fixed;
+    padding-top: 10px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 1px 8px rgb(138, 127, 8);
+    background-color: rgb(221, 181, 18);
+    color: white;
+    text-align: center;
+}
+
+footer > h3{
+    padding-bottom: 5px;
+    color: black;
+}
+  
+
+#nav-title {
+    margin-right: auto;
+    font-size: 1.5em;
+    color: black;
+}
+
+header li {
+    list-style: none;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease 0s;
+}
+
+header a:hover {
+    color: gray;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: center;
+}
+.card {
+    flex: 0 0 400px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
+    background-color: antiquewhite;
+
+} 
+.card img {
+max-width: 100%;
+}
+.card .text {
+padding: 0 20px 20px;
+}
+.card .text > a > button {
+background: rgb(221, 181, 18);
+border: 0;
+color: black;
+padding: 10px;
+width: 100%;
+cursor: pointer;
+}
+.card .text > a > button:hover {
+    background: rgb(138, 127, 8);
+}
+.card-content{
+    margin: 10px;
+}
+
+img{
+    width: 100%;
+    height: 25vw;
+    object-fit: cover;
+}
+
+#table-content {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#table-content td, #table-content th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  background-color: antiquewhite;
+}
+
+#table-content td:hover {background-color: #ddd;}
+
+#table-content th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(138, 127, 8);
+  color: white;
+}
